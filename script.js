@@ -21,6 +21,8 @@ function loadCurrentVideo() {
 
   // Event Listener für das Ende des Videos
   videoElement.addEventListener("ended", playNextVideo);
+
+  videoElement.addEventListener("timeupdate", updateProgressBar);
 }
 
 // Funktion zum automatischen Abspielen des nächsten Videos
@@ -49,10 +51,17 @@ function prevVideo() {
 
 // Funktion zur Aktualisierung des Fortschrittsbalkens
 function updateProgressBar() {
-  const duration = videoElement.duration;
-  const currentTime = videoElement.currentTime;
-  const progress = (currentTime / duration) * 100;
-  progressBar.style.width = `${progress}%`;
+  const progress = (videoElement.currentTime / videoElement.duration) * 100;
+  progressBar.style.transition = "none"; // Übergangseffekt deaktivieren
+  // progressBar.style.width = "0%"; // Startposition auf 0 setzen
+  setTimeout(function () {
+    progressBar.style.transition = "width 0.3s linear"; // Übergangseffekt aktivieren
+    progressBar.style.width = `${progress}%`; // Zielposition setzen
+  }, 0);
+
+  // const duration = videoElement.duration;
+  // const currentTime = videoElement.currentTime;
+  // progressBar.style.width = `${progress}%`;
 }
 
 // Event Listener für die Buttons
@@ -78,7 +87,7 @@ document.addEventListener("click", (event) => {
   const screenWidth = window.innerWidth;
   const clickPosition = event.clientX;
 
-  if (clickPosition <= screenWidth * 0.15) {
+  if (clickPosition <= screenWidth * 0.25) {
     // Klick auf den linken 15%-Bereich des Bildschirms
     prevVideo();
   } else if (clickPosition >= screenWidth * 0.85) {
