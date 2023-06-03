@@ -1,0 +1,49 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f3f8f2;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.progress-bar {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 0;
+  height: 5px;
+  background-color: #8e5a35;
+}
+
+#currentVideo {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.15);
+  z-index: 1;
+}
+
+.nav-button {
+  font-size: 20px;
+  padding: 10px 20px;
+  color: white;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
