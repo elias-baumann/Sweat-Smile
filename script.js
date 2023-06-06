@@ -12,6 +12,29 @@ const prevButton = document.getElementById("prevBtn");
 const nextButton = document.getElementById("nextBtn");
 const progressBar = document.querySelector(".progress-bar");
 
+// Event Listener für Klickereignisse
+document.addEventListener("click", (event) => {
+  const screenWidth = window.innerWidth;
+  const clickPosition = event.clientX;
+
+  if (clickPosition <= screenWidth * 0.25) {
+    // Klick auf den linken 15%-Bereich des Bildschirms
+    prevVideo();
+  } else if (clickPosition >= screenWidth * 0.75) {
+    // Klick auf den rechten 15%-Bereich des Bildschirms
+    nextVideo();
+  } else {
+    // Klick innerhalb des mittleren Bereichs (Video selbst)
+    if (isVideoPaused) {
+      videoElement.play();
+      isVideoPaused = false;
+    } else {
+      videoElement.pause();
+      isVideoPaused = true;
+    }
+  }
+});
+
 // Funktion zum Laden des aktuellen Videos und automatischen Abspielens
 function loadCurrentVideo() {
   videoElement.src = videos[currentVideoIndex];
@@ -52,6 +75,7 @@ function prevVideo() {
 // Funktion zur Aktualisierung des Fortschrittsbalkens
 function updateProgressBar() {
   const progress = (videoElement.currentTime / videoElement.duration) * 100;
+
   progressBar.style.transition = "none"; // Übergangseffekt deaktivieren
   // progressBar.style.width = "0%"; // Startposition auf 0 setzen
   setTimeout(function () {
@@ -74,33 +98,10 @@ window.addEventListener("load", loadCurrentVideo);
 // Event Listener für die Aktualisierung des Fortschrittsbalkens
 videoElement.addEventListener("timeupdate", updateProgressBar);
 
-// Event Listener für Klickereignisse
-document.addEventListener("click", () => {
-  videoElement.pause();
-});
-
 // Variable zum Verfolgen des Wiedergabestatus des Videos
 let isVideoPaused = false;
 
-// Event Listener für Klickereignisse
-document.addEventListener("click", (event) => {
-  const screenWidth = window.innerWidth;
-  const clickPosition = event.clientX;
-
-  if (clickPosition <= screenWidth * 0.25) {
-    // Klick auf den linken 15%-Bereich des Bildschirms
-    prevVideo();
-  } else if (clickPosition >= screenWidth * 0.85) {
-    // Klick auf den rechten 15%-Bereich des Bildschirms
-    nextVideo();
-  } else {
-    // Klick innerhalb des mittleren Bereichs (Video selbst)
-    if (isVideoPaused) {
-      videoElement.play();
-      isVideoPaused = false;
-    } else {
-      videoElement.pause();
-      isVideoPaused = true;
-    }
-  }
-});
+// // Event Listener für Klickereignisse
+// document.addEventListener("click", () => {
+//   videoElement.pause();
+// });
