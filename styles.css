@@ -5,6 +5,11 @@ body {
   background-color: #f3f8f2;
 }
 
+#debugContainer {
+  /* comment this out if you want to show debug info */
+  display: none;
+}
+
 .video-container {
   position: relative;
   width: 100%;

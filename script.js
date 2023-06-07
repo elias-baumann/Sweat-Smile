@@ -33,6 +33,7 @@ document.addEventListener("click", (event) => {
       isVideoPaused = true;
     }
   }
+  doDebug();
 });
 
 // Funktion zum Laden des aktuellen Videos und automatischen Abspielens
@@ -40,12 +41,16 @@ function loadCurrentVideo() {
   videoElement.src = videos[currentVideoIndex];
   videoElement.load();
   videoElement.play();
+
+  //  videoElement.playbackRate = 3;
   updateProgressBar();
 
   // Event Listener für das Ende des Videos
   videoElement.addEventListener("ended", playNextVideo);
 
   videoElement.addEventListener("timeupdate", updateProgressBar);
+
+  doDebug();
 }
 
 // Funktion zum automatischen Abspielen des nächsten Videos
@@ -54,6 +59,7 @@ function playNextVideo() {
     currentVideoIndex++;
     loadCurrentVideo();
   }
+  doDebug();
 }
 
 // Funktion zum Vorwärtsnavigieren
@@ -62,6 +68,7 @@ function nextVideo() {
     currentVideoIndex++;
     loadCurrentVideo();
   }
+  doDebug();
 }
 
 // Funktion zum Rückwärtsnavigieren
@@ -70,6 +77,7 @@ function prevVideo() {
     currentVideoIndex--;
     loadCurrentVideo();
   }
+  doDebug();
 }
 
 // Funktion zur Aktualisierung des Fortschrittsbalkens
@@ -89,19 +97,30 @@ function updateProgressBar() {
 }
 
 // Event Listener für die Buttons
-nextButton.addEventListener("click", nextVideo);
-prevButton.addEventListener("click", prevVideo);
+// nextButton.addEventListener("click", nextVideo);
+// prevButton.addEventListener("click", prevVideo);
+
+// Variable zum Verfolgen des Wiedergabestatus des Videos
+let isVideoPaused = false;
 
 // Event Listener für das Laden der Seite
 window.addEventListener("load", loadCurrentVideo);
 
 // Event Listener für die Aktualisierung des Fortschrittsbalkens
-videoElement.addEventListener("timeupdate", updateProgressBar);
+// videoElement.addEventListener("timeupdate", updateProgressBar);
 
-// Variable zum Verfolgen des Wiedergabestatus des Videos
-let isVideoPaused = false;
+
 
 // // Event Listener für Klickereignisse
 // document.addEventListener("click", () => {
 //   videoElement.pause();
 // });
+
+
+
+function doDebug() {
+  const debugContainer = document.getElementById("debugContainer");
+  debugContainer.innerHTML = `currentVideoIndex: ${currentVideoIndex} <br> video: ${videos[currentVideoIndex]} <br> isVideoPaused: ${isVideoPaused}`;
+}
+
+doDebug();
